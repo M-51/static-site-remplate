@@ -12,6 +12,7 @@ const rev = require('gulp-rev');
 const revRewrite = require('gulp-rev-rewrite');
 const brotli = require('gulp-brotli');
 const gzip = require('gulp-gzip');
+const htmlmin = require('gulp-htmlmin');
 
 function sassDev() {
     return gulp.src('./src/scss/index.scss')
@@ -92,6 +93,12 @@ function minifyJsProduction() {
         .pipe(gulp.dest('./build/static/js/'));
 }
 
+function minifyHtmlProduction() {
+    return gulp.src('./build/html/**/*.html')
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(gulp.dest('./build/html/'));
+}
+
 function revProduction() {
     return gulp.src(['./build/static/css/*.css', './build/static/js/*.js'], { base: './build/static' })
         .pipe(rev())
@@ -133,7 +140,7 @@ function gzipProduction() {
 gulp.task('build', gulp.series(
     clearBuild,
     gulp.parallel(copyHtml, copyStatic, copyDocker),
-    gulp.parallel(sassProduction, gulp.series(rollupProduction, minifyJsProduction)),
+    gulp.parallel(sassProduction, gulp.series(rollupProduction, minifyJsProduction), minifyHtmlProduction),
     revProduction,
     rewriteProduction,
     cleanLeftovers,
