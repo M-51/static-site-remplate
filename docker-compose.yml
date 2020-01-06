@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./docker/dev/nginx/.
+    container_name: sitename_nginx
+    restart: always
+    ports: 
+      - "80:80"
+    volumes:
+    - ./html:/sitename/html
+    - ./static:/sitename/static

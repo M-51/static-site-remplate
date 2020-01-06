@@ -1,0 +1,13 @@
+{
+    "extends": "airbnb-base",
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "indent": [
+            "error", 4
+        ],
+        "max-len": ["error", { "code": 128, "ignoreStrings": true, "ignoreTemplateLiterals": true, "ignoreComments": true }],
+        "no-restricted-syntax": ["off", "ForOfStatement"],
+    }
+}
